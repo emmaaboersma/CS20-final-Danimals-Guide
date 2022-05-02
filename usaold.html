@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <!-- link external stylesheet -->
+        <link type="text/css" href="style.css" rel="stylesheet"/>
+        <script>
+            window.onload = function() {
+                //call functions to get data (fetch and AJAX call)
+                fetchData();
+                getData();
+            }
+
+            async function fetchData() {
+                //get response from API
+                let response = await fetch("https://v6.exchangerate-api.com/v6/581fcdf491411ea71c88ac38/latest/USD");
+                
+                //get data in JSON format
+                let data = await response.json();
+                
+                if (response.status == 200) {
+                    //display select data
+                    display = "Exchange Rate: " + data["conversion_rates"]["USD"];
+
+                    //set div to display data
+                    document.getElementById("data").innerHTML = display;
+                } else {
+                    //display error message
+                    document.getElementById("data").innerHTML = "Something went wrong!  Try again";
+                }
+            }
+        </script>
+    </head>
+    <body>
+
+        <!-- php to interact with SQL database -->
+        <!-- <?php
+
+            $db_server = "sql201.epizy.com";// your server
+            $db_userid = "epiz_30906840"; // your user id
+            $db_pw = "l7SdKG4Ca4qvkY"; // your pw
+            $db= "epiz_30906840_jade_delight"; // your database
+
+            $conn = new mysqli($db_server, $db_userid, $db_pw);
+
+            if ($conn->connect_error)
+            {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            
+        ?> -->
+        <h1>Danimals Guide</h1>
+        <!-- interactive map? -->
+        <img src="usa.png" width=400/>
+        <!-- form for user to select activities -->
+        <p>Select any statements that apply to you and we can provide 
+            suggestions tailored to your personal preferences!
+        </p>
+        <form method="post" action="#">
+            <input type="checkbox" name="x1">I like learning about different cultures.<br/>
+            <input type="checkbox" name="x2">I enjoy going to the beach.<br/>
+            <input type="checkbox" name="x3">I enjoy nature and the outdoors.<br/>
+            <input type="checkbox" name="x4">I like trying new foods.<br/>
+            <input type="checkbox" name="x5">I like exploring cities.<br/><br/>
+
+            <input type="submit" value="submit">
+        </form>
+        <!-- query database based on form -->
+        <div id ='data'>&nbsp;</div>
+    
+        
+    </body>
+</html>
